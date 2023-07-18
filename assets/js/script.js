@@ -1,8 +1,8 @@
-
+// This function grabs the openweathermap API data and returns info that will be extracted
 function getApi(requestUrl) {
     console.log(requestUrl);
 
-    fetch (requestUrl , {}) 
+    var resolve = fetch (requestUrl , {}) 
     .then(function (response) {
         console.log(response);
         var newResponse = response.json();
@@ -12,7 +12,8 @@ function getApi(requestUrl) {
     .then(function (data) {
         console.log(data);
     });
-
+    
+    return resolve;
 }
 
 var requestUrl = 
