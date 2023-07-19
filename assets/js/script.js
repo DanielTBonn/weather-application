@@ -1,3 +1,5 @@
+var resultData = [];
+
 // This function grabs the openweathermap API data and returns info that will be extracted
 function getApi(requestUrl) {
     console.log(requestUrl);
@@ -10,17 +12,18 @@ function getApi(requestUrl) {
         return newResponse;
     })
     .then(function (data) {
-        console.log(data);
+        console.log(data)
+        console.log(data.weather)
+        resultData = ["Date: " ,"Climate: ", "Temp: " + data.main.temp, "Wind: " + data.wind.speed, "Humidity: " +data.main.humidity];
+        setData(resultData);
+
+      
+        return data
+        
     });
     
     return resolve;
 }
-
-var todayEl = $(".todays-weather");
-console.log(todayEl);
-$.each(todayEl.children(), function(item) { 
-    console.log(item);
-});
 
 
 var requestUrl = 
@@ -28,4 +31,18 @@ var requestUrl =
 
 requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=2f8d2f4d2713c98d73c6bee0108a1778";
 
-getApi(requestUrl);
+
+var weatherData = getApi(requestUrl);
+console.log(weatherData);
+console.log(resultData);
+
+function setData(arr) {
+
+    var todayEl = $(".todays-weather");
+    $.each(todayEl.children("p"), function(index) { 
+        console.log(index);
+        $(this).text(arr[index]);
+    });
+}
+
+
