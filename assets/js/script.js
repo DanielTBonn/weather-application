@@ -1,4 +1,6 @@
 var resultData = [];
+var today = dayjs().format('M/D/YYYY');
+console.log(today);
 
 // This function grabs the openweathermap API data and returns info that will be extracted
 function getApi(requestUrl) {
@@ -14,7 +16,7 @@ function getApi(requestUrl) {
     .then(function (data) {
         console.log(data)
         console.log(data.weather)
-        resultData = ["Date: " ,"Climate: ", "Temp: " + data.main.temp, "Wind: " + data.wind.speed, "Humidity: " +data.main.humidity];
+        resultData = ["Date: " + today ,"Climate: " + data.weather[0].main, "Temp: " + data.main.temp, "Wind: " + data.wind.speed, "Humidity: " +data.main.humidity];
         setData(resultData);
 
       
