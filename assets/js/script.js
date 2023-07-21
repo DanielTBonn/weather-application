@@ -28,6 +28,10 @@ function getApi(requestUrl) {
         resultData = ["Date: " + today ,"Climate: " + data.list[0].weather[0].main, "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity];
         setData(resultData, ".todays-weather");
 
+        for (i = 0; i < weatherCards.length; i++) {
+
+        }
+
 
 
         return data
@@ -50,7 +54,7 @@ console.log(resultData);
 function setData(arr, eVal) {
 
     var currentEl = $(eVal);
-    console.log(todayEl)
+    console.log(currentEl)
     $.each(currentEl.children("p"), function(index) { 
         console.log(index);
         $(this).text(arr[index]);
