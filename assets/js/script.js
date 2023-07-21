@@ -1,6 +1,15 @@
 var resultData = [];
 var today = dayjs().format('M/D/YYYY');
+var weatherCards = $("[id^=weather-card]");
+console.log(weatherCards);
+console.log(weatherCards[0].id)
+console.log($(".todays-weather"));
+console.log("wut")
 console.log(today);
+// Adding a weathermap to grab weather emojis depending on climate conditions
+const weatherMap = new Map([
+    ["apples", 500]
+]);
 
 // This function grabs the openweathermap API data and returns info that will be extracted
 function getApi(requestUrl) {
@@ -16,10 +25,11 @@ function getApi(requestUrl) {
     .then(function (data) {
         console.log(data)
         console.log(data.weather)
-        resultData = ["Date: " + today ,"Climate: " + data.weather[0].main, "Temp: " + data.main.temp, "Wind: " + data.wind.speed, "Humidity: " +data.main.humidity];
-        setData(resultData);
+        resultData = ["Date: " + today ,"Climate: " + data.list[0].weather[0].main, "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity];
+        setData(resultData, ".todays-weather");
 
-      
+
+
         return data
         
     });
@@ -29,19 +39,19 @@ function getApi(requestUrl) {
 
 
 var requestUrl = 
-"api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=2f8d2f4d2713c98d73c6bee0108a1778";
+"https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=2f8d2f4d2713c98d73c6bee0108a1778";
 
-requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=2f8d2f4d2713c98d73c6bee0108a1778";
 
 
 var weatherData = getApi(requestUrl);
 console.log(weatherData);
 console.log(resultData);
 
-function setData(arr) {
+function setData(arr, eVal) {
 
-    var todayEl = $(".todays-weather");
-    $.each(todayEl.children("p"), function(index) { 
+    var currentEl = $(eVal);
+    console.log(todayEl)
+    $.each(currentEl.children("p"), function(index) { 
         console.log(index);
         $(this).text(arr[index]);
     });
