@@ -2,9 +2,7 @@ var resultData = [];
 var today = dayjs().format('M/D/YYYY');
 var weatherCards = $("[id^=weather-card]");
 console.log(weatherCards);
-console.log(weatherCards[0].id)
-console.log($(".todays-weather"));
-console.log("wut")
+console.log(weatherCards.length)
 console.log(today);
 // Adding a weathermap to grab weather emojis depending on climate conditions
 const weatherMap = new Map([
@@ -29,9 +27,10 @@ function getApi(requestUrl) {
         setData(resultData, ".todays-weather");
 
         for (i = 0; i < weatherCards.length; i++) {
-
+            var info = data.list[(i * 3) + 3];
+            resultData = ["Date: " + today ,"Climate: " + info.weather[0].main, "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity];
+            setData(resultData, "#" + weatherCards[i].id)
         }
-
 
 
         return data
