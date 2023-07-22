@@ -5,16 +5,6 @@ console.log(weatherCards);
 console.log(weatherCards.length)
 console.log(today);
 
-// Adding a weathermap to grab weather emojis depending on climate conditions
-const weatherMap = new Map([
-    ["Clear", '<i class="fa-solid fa-sun"></i>'],
-    ["Clouds", '<i class="fa-solid fa-cloud"></i>'],
-    ["Drizzle", '<i class="fa-solid fa-cloud-sun-rain"></i>'],
-    ["Rain", '<i class="fa-solid fa-cloud-rain"></i>'],
-    ["Thunderstorm", '<i class="fa-solid fa-cloud-bolt"></i>'],
-    ["Snow", '<i class="fa-solid fa-snowflake"></i>']
-]);
-
 // This function grabs the openweathermap API data and returns info that will be extracted
 function getApi(requestUrl) {
     console.log(requestUrl);
