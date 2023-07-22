@@ -31,9 +31,10 @@ function getApi(requestUrl) {
     .then(function (data) {
         console.log(data)
         // Adds weather data for the current day, grabs the current date, and the weather icon associated with the present conditions
+        var cityName = data.city.name;
         var currentDate = dayjs(data.list[0].dt_txt).format('M/D/YYYY');
         var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon +'@2x.png';
-        resultData = [[currentDate , weatherIcon],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
+        resultData = [[cityName + " " + currentDate , weatherIcon],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + converWindMPH(data.list[0].wind.speed), "Humidity: " + data.list[0].main.humidity + "%"];
         setData(resultData, ".todays-weather");
 
         // For loop prints weather info to the weatherCards in the 5 day forecast section
@@ -91,6 +92,10 @@ function setData(arr, eVal) {
 
 function convertFarenheit(temp) {
     return ((temp - 273.15) * (9/5) + 32).toFixed(2);
+}
+
+function converWindMPH(wind) {
+    return (wind * 2.237).toFixed(2);
 }
 
 var todayEl = $(".todays-weather");
