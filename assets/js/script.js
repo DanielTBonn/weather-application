@@ -30,7 +30,7 @@ function getApi(requestUrl) {
     // info is taken from data and fills out the cards of the page
     .then(function (data) {
         console.log(data)
-        // Adds weather data for the current day
+        // Adds weather data for the current day, grabs the current date, and the weather icon associated with the present conditions
         var currentDate = dayjs(data.list[0].dt_txt).format('M/D/YYYY');
         var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon +'@2x.png';
         resultData = [[currentDate , weatherIcon],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
@@ -45,7 +45,7 @@ function getApi(requestUrl) {
             } else {
                 info = data.list[(i * 8) + 8];
             }
-            // Adds weather data for the respective day
+            // Adds weather data for the respective day, grabs the respective date, and the weather icon associated with the present conditions
             currentDate = dayjs(info.dt_txt).format('M/D/YYYY');
             weatherIcon = 'https://openweathermap.org/img/wn/' + info.weather[0].icon +'@2x.png';
             resultData = [[currentDate , weatherIcon], "Temp: " + convertFarenheit(info.main.temp) + " \u00B0F", "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
@@ -80,6 +80,7 @@ function setData(arr, eVal) {
             $(this).text(arr[0][0] + " ");
             var addIcon = document.createElement("img");
             addIcon.setAttribute("src", arr[0][1]);
+            addIcon.setAttribute("class", "icon");
             $(this).append(addIcon)
         } else {
             $(this).text(arr[index]);
