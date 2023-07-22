@@ -32,7 +32,7 @@ function getApi(requestUrl) {
         console.log(data)
         // Adds weather data for the current day
         var currentDate = dayjs(data.list[0].dt_txt).format('M/D/YYYY');
-        resultData = ["Date: " + currentDate , data.list[0].weather[0].main, "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
+        resultData = [[currentDate , data.list[0].weather[0].main],  "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
         setData(resultData, ".todays-weather");
 
         // For loop prints weather info to the weatherCards in the 5 day forecast section
@@ -46,7 +46,7 @@ function getApi(requestUrl) {
             }
             // Adds weather data for the respective day
             currentDate = dayjs(info.dt_txt).format('M/D/YYYY');
-            resultData = ["Date: " + currentDate , info.weather[0].main, "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
+            resultData = [[currentDate , info.weather[0].main], "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
             setData(resultData, "#" + weatherCards[i].id)
         }
 
@@ -71,10 +71,11 @@ function setData(arr, eVal) {
     var currentEl = $(eVal);
     console.log(currentEl)
     $.each(currentEl.children("p"), function(index) { 
-        if (index === 1) {
+        if (index === 0) {
             // console.log($(this))
             // console.log(arr[1])
-            $(this).append(weatherMap.get(arr[1]))
+            $(this).text(arr[0][0] + " ");
+            $(this).append(weatherMap.get(arr[0][1]))
         } else {
             $(this).text(arr[index]);
 
