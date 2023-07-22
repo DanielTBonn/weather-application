@@ -11,7 +11,8 @@ $(".todays-weather").append(ele)
 
 // Adding a weathermap to grab weather emojis depending on climate conditions
 const weatherMap = new Map([
-    ["snow", '<i class="fa-solid fa-snowflake"></i>']
+    ["Clear", '<i class="fa-solid fa-sun"></i>'],
+    ["Snow", '<i class="fa-solid fa-snowflake"></i>']
 ]);
 
 // This function grabs the openweathermap API data and returns info that will be extracted
@@ -29,13 +30,12 @@ function getApi(requestUrl) {
     // info is taken from data and fills out the cards of the page
     .then(function (data) {
         console.log(data)
-        console.log(data.weather)
-        resultData = ["Date: " + today ,"Climate:  " + data.list[0].weather[0].main, "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity];
+        resultData = ["Date: " + today , data.list[0].weather[0].main, "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity];
         setData(resultData, ".todays-weather");
 
         for (i = 0; i < weatherCards.length; i++) {
             var info = data.list[(i * 3) + 3];
-            resultData = ["Date: " + today ,"Climate: " + info.weather[0].main, "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity];
+            resultData = ["Date: " + today , info.weather[0].main, "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity];
             setData(resultData, "#" + weatherCards[i].id)
         }
 
@@ -64,9 +64,9 @@ function setData(arr, eVal) {
     $.each(currentEl.children("p"), function(index) { 
         if (index === 1) {
             console.log($(this))
-            $(this).append(weatherMap.get("snow"))
+            console.log(arr[1])
+            $(this).append(weatherMap.get(arr[1]))
         } else {
-            console.log(index);
             $(this).text(arr[index]);
 
         }
