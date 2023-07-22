@@ -24,7 +24,7 @@ function getApi(requestUrl) {
         var cityName = data.city.name;
         var currentDate = dayjs(data.list[0].dt_txt).format('M/D/YYYY');
         var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon +'@2x.png';
-        resultData = [[cityName + " " + currentDate , weatherIcon],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + converWindMPH(data.list[0].wind.speed), "Humidity: " + data.list[0].main.humidity + "%"];
+        resultData = [[cityName + " " + currentDate , weatherIcon],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + converWindMPH(data.list[0].wind.speed) + " MPH", "Humidity: " + data.list[0].main.humidity + "%"];
         setData(resultData, ".todays-weather");
 
         // For loop prints weather info to the weatherCards in the 5 day forecast section
@@ -39,7 +39,7 @@ function getApi(requestUrl) {
             // Adds weather data for the respective day, grabs the respective date, and the weather icon associated with the present conditions
             currentDate = dayjs(info.dt_txt).format('M/D/YYYY');
             weatherIcon = 'https://openweathermap.org/img/wn/' + info.weather[0].icon +'@2x.png';
-            resultData = [[currentDate , weatherIcon], "Temp: " + convertFarenheit(info.main.temp) + " \u00B0F", "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
+            resultData = [[currentDate , weatherIcon], "Temp: " + convertFarenheit(info.main.temp) + " \u00B0F", "Wind: " + converWindMPH(info.wind.speed) + " MPH", "Humidity: " + info.main.humidity + "%"];
             setData(resultData, "#" + weatherCards[i].id)
         }
 
