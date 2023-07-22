@@ -34,7 +34,13 @@ function getApi(requestUrl) {
         setData(resultData, ".todays-weather");
 
         for (i = 0; i < weatherCards.length; i++) {
-            var info = data.list[(i * 3) + 3];
+            // Had to develop this if/else block for instances where weather data briefly only covers 5 days including the current day's forecast at 0:00 military time
+            var info;
+            if (i === (weatherCards.length - 1)) {
+                info = data.list[(i * 8) + 7];
+            } else {
+                info = data.list[(i * 8) + 8];
+            }
             resultData = ["Date: " + today , info.weather[0].main, "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
             setData(resultData, "#" + weatherCards[i].id)
         }
@@ -49,7 +55,7 @@ function getApi(requestUrl) {
 
 var apiKey = "2f8d2f4d2713c98d73c6bee0108a1778";
 var requestUrl = 
-"https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=" + apiKey;
+"https://api.openweathermap.org/data/2.5/forecast?q=London,uk&appid=" + apiKey;
 
 
 
