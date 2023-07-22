@@ -30,12 +30,12 @@ function getApi(requestUrl) {
     // info is taken from data and fills out the cards of the page
     .then(function (data) {
         console.log(data)
-        resultData = ["Date: " + today , data.list[0].weather[0].main, "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + " %"];
+        resultData = ["Date: " + today , data.list[0].weather[0].main, "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
         setData(resultData, ".todays-weather");
 
         for (i = 0; i < weatherCards.length; i++) {
             var info = data.list[(i * 3) + 3];
-            resultData = ["Date: " + today , info.weather[0].main, "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + " %"];
+            resultData = ["Date: " + today , info.weather[0].main, "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
             setData(resultData, "#" + weatherCards[i].id)
         }
 
