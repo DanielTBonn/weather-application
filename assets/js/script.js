@@ -32,7 +32,7 @@ function getApi(requestUrl) {
         console.log(data)
         // Adds weather data for the current day
         var currentDate = dayjs(data.list[0].dt_txt).format('M/D/YYYY');
-        resultData = [[currentDate , data.list[0].weather[0].main],  "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
+        resultData = [[currentDate , data.list[0].weather[0].main],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
         setData(resultData, ".todays-weather");
 
         // For loop prints weather info to the weatherCards in the 5 day forecast section
@@ -46,7 +46,7 @@ function getApi(requestUrl) {
             }
             // Adds weather data for the respective day
             currentDate = dayjs(info.dt_txt).format('M/D/YYYY');
-            resultData = [[currentDate , info.weather[0].main], "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
+            resultData = [[currentDate , info.weather[0].main], "Temp: " + convertFarenheit(info.main.temp) + " \u00B0F", "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
             setData(resultData, "#" + weatherCards[i].id)
         }
 
@@ -61,7 +61,6 @@ var requestUrl =
 "https://api.openweathermap.org/data/2.5/forecast?q=London,uk&appid=" + apiKey;
 
 
-
 var weatherData = getApi(requestUrl);
 console.log(weatherData);
 console.log(resultData);
@@ -70,7 +69,9 @@ console.log(resultData);
 function setData(arr, eVal) {
     var currentEl = $(eVal);
     console.log(currentEl)
+    // Loops through all of the different weather cards children [date/climate, temp, wind, humidity]
     $.each(currentEl.children("p"), function(index) { 
+        // adds the date and current weather conditions if it is the first index and the rest of the information in the second
         if (index === 0) {
             // console.log($(this))
             // console.log(arr[1])
@@ -83,4 +84,6 @@ function setData(arr, eVal) {
     });
 }
 
-
+function convertFarenheit(temp) {
+    return ((temp - 273.15) * (9/5) + 32).toFixed(2);
+}
