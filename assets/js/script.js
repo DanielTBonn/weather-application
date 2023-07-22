@@ -30,8 +30,13 @@ function getApi(requestUrl) {
     // info is taken from data and fills out the cards of the page
     .then(function (data) {
         console.log(data)
-        resultData = ["Date: " + today , data.list[0].weather[0].main, "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
+        var currentDate = dayjs(data.list[0].dt_txt).format('M/D/YYYY');
+        resultData = ["Date: " + currentDate , data.list[0].weather[0].main, "Temp: " + data.list[0].main.temp, "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
         setData(resultData, ".todays-weather");
+        console.log(data.list[0].dt_txt);
+        var dateToday = data.list[0].dt_txt;
+        var newDate = dayjs(dateToday).format('M/D/YYYY');
+        console.log("newDate:",newDate)
 
         for (i = 0; i < weatherCards.length; i++) {
             // Had to develop this if/else block for instances where weather data briefly only covers 5 days including the current day's forecast at 0:00 military time
@@ -41,7 +46,8 @@ function getApi(requestUrl) {
             } else {
                 info = data.list[(i * 8) + 8];
             }
-            resultData = ["Date: " + today , info.weather[0].main, "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
+            currentDate = dayjs(info.dt_txt).format('M/D/YYYY');
+            resultData = ["Date: " + currentDate , info.weather[0].main, "Temp: " + info.main.temp, "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
             setData(resultData, "#" + weatherCards[i].id)
         }
 
