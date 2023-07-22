@@ -32,7 +32,8 @@ function getApi(requestUrl) {
         console.log(data)
         // Adds weather data for the current day
         var currentDate = dayjs(data.list[0].dt_txt).format('M/D/YYYY');
-        resultData = [[currentDate , data.list[0].weather[0].main],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
+        var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon +'@2x.png';
+        resultData = [[currentDate , weatherIcon],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + data.list[0].wind.speed, "Humidity: " + data.list[0].main.humidity + "%"];
         setData(resultData, ".todays-weather");
 
         // For loop prints weather info to the weatherCards in the 5 day forecast section
@@ -46,7 +47,8 @@ function getApi(requestUrl) {
             }
             // Adds weather data for the respective day
             currentDate = dayjs(info.dt_txt).format('M/D/YYYY');
-            resultData = [[currentDate , info.weather[0].main], "Temp: " + convertFarenheit(info.main.temp) + " \u00B0F", "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
+            weatherIcon = 'https://openweathermap.org/img/wn/' + info.weather[0].icon +'@2x.png';
+            resultData = [[currentDate , weatherIcon], "Temp: " + convertFarenheit(info.main.temp) + " \u00B0F", "Wind: " + info.wind.speed, "Humidity: " + info.main.humidity + "%"];
             setData(resultData, "#" + weatherCards[i].id)
         }
 
@@ -76,7 +78,9 @@ function setData(arr, eVal) {
             // console.log($(this))
             // console.log(arr[1])
             $(this).text(arr[0][0] + " ");
-            $(this).append(weatherMap.get(arr[0][1]))
+            var addIcon = document.createElement("img");
+            addIcon.setAttribute("src", arr[0][1]);
+            $(this).append(addIcon)
         } else {
             $(this).text(arr[index]);
 
@@ -87,3 +91,6 @@ function setData(arr, eVal) {
 function convertFarenheit(temp) {
     return ((temp - 273.15) * (9/5) + 32).toFixed(2);
 }
+
+var todayEl = $(".todays-weather");
+var imgAdd = document.createElement("img");
