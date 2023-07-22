@@ -66,14 +66,14 @@ var weatherData = getApi(requestUrl);
 console.log(weatherData);
 console.log(resultData);
 
+// Sets the data to the element we are targeting
 function setData(arr, eVal) {
-
     var currentEl = $(eVal);
     console.log(currentEl)
     $.each(currentEl.children("p"), function(index) { 
         if (index === 1) {
-            console.log($(this))
-            console.log(arr[1])
+            // console.log($(this))
+            // console.log(arr[1])
             $(this).append(weatherMap.get(arr[1]))
         } else {
             $(this).text(arr[index]);
