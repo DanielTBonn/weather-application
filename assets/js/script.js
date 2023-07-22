@@ -4,10 +4,6 @@ var weatherCards = $("[id^=weather-card]");
 console.log(weatherCards);
 console.log(weatherCards.length)
 console.log(today);
-var ele = document.createElement("i")
-ele.setAttribute("class", "fa-solid fa-snowflake")
-console.log(ele)
-$(".todays-weather").append(ele)
 
 // Adding a weathermap to grab weather emojis depending on climate conditions
 const weatherMap = new Map([
