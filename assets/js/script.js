@@ -47,9 +47,9 @@ function getApi(requestUrl) {
     return resolve;
 }
 
-
+var apiKey = "2f8d2f4d2713c98d73c6bee0108a1778";
 var requestUrl = 
-"https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=2f8d2f4d2713c98d73c6bee0108a1778";
+"https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=" + apiKey;
 
 
 
