@@ -88,5 +88,13 @@ function converWindMPH(wind) {
     return (wind * 2.237).toFixed(2);
 }
 
-var todayEl = $(".todays-weather");
-var imgAdd = document.createElement("img");
+$( function() {
+    $( "#selectable" ).selectable();
+
+
+  } );
+  
+  if ($('#selectable').selected()) {
+    console.log("selected");
+
+}
