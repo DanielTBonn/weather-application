@@ -117,8 +117,6 @@ function convertGeocode(city, country) {
 
 $( function() {
     $( "#selectable" ).selectable();
-
-
   } );
   
 $(".searchBtn").on("click", function () {
@@ -130,7 +128,9 @@ $(".searchBtn").on("click", function () {
 
 var searchLi = $(".ui-widget-content");
 console.log(searchLi)
-searchLi.on("click", function() {
-    console.log($(this.text()));
+searchLi.selectable({
+    selecting: function(event, ui) {
+        console.log($(this).text())
+    }
 })
 
