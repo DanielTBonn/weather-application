@@ -9,13 +9,25 @@ $(function() {
 });
 
 function addCityLocalStorage(city) {
-    if (!localStorage.getItem("cities")) {
-        localStorage.setItem("cities", [city]);
-    } else {
-        return;
+    var cities = getStorage();
+    cities.push(city);
+    localStorage.setItem("cities", JSON.stringify(cities))
+}
+
+function getStorage(){
+    var cities = [];
+
+    if (localStorage.cities) {
+        cities = JSON.parse(localStorage.cities)
     }
+    return cities;
+}
 
-
+function displaySearches() {
+    var cities = getStorage();
+    for (let i = 0; i < cities.length; i++) {
+        appendCity(cities[i]);
+    }
 }
 
 // This function grabs the openweathermap API data and returns info that will be extracted
@@ -35,6 +47,7 @@ function getApi(newUrl) {
         console.log(data)
         // Adds weather data for the current day, grabs the current date, and the weather icon associated with the present conditions
         var cityName = data.city.name;
+        addCityLocalStorage(cityName);
         var currentDate = dayjs(data.list[0].dt_txt).format('M/D/YYYY');
         var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon +'@2x.png';
         resultData = [[cityName + " " + currentDate , weatherIcon],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + converWindMPH(data.list[0].wind.speed) + " MPH", "Humidity: " + data.list[0].main.humidity + "%"];
@@ -56,7 +69,6 @@ function getApi(newUrl) {
             setData(resultData, "#" + weatherCards[i].id)
         }
 
-        localStorage.setItem("cities", [])
 
         
     });
@@ -135,13 +147,18 @@ function setSelectables() {
 $(".searchBtn").on("click", function () {
     var city = $(this).prev().val();
     convertGeocode(city, "");
+
 })
 
 // function that appends new searches to the search list
-function appendCities(city) {
+function appendCity(city) {
     var addCityLi = $("#selectable");
     console.log(city);
     var cityLi = $('<li class="ui-widget-content"></li>').text(city);
     addCityLi.append(cityLi);
     setSelectables();
 }
+
+displaySearches();
+
+console.log(localStorage.cities);
