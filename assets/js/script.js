@@ -12,7 +12,7 @@ $(function() {
     }
 });
 
-// Adds newly selected city to local storage
+// Adds newly selected city to local storage if not already present
 function addCityLocalStorage(city) {
     var cities = getStorage();
     if (cities.includes(city)) {
@@ -21,10 +21,11 @@ function addCityLocalStorage(city) {
     } else {
         cities.push(city);
         localStorage.setItem("cities", JSON.stringify(cities));
+        appendCity(city);
     }
 }
 
-
+// retrieves localStorage of cities as an array
 function getStorage(){
     var cities = [];
 
