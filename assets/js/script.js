@@ -10,8 +10,13 @@ $(function() {
 
 function addCityLocalStorage(city) {
     var cities = getStorage();
-    cities.push(city);
-    localStorage.setItem("cities", JSON.stringify(cities))
+    if (cities.includes(city)) {
+        console.log("already there");
+        return;
+    } else {
+        cities.push(city);
+        localStorage.setItem("cities", JSON.stringify(cities));
+    }
 }
 
 function getStorage(){
@@ -162,3 +167,6 @@ function appendCity(city) {
 displaySearches();
 
 console.log(localStorage.cities);
+var getAnItem = getStorage();
+var newItem = getAnItem.includes("Houston");
+console.log(newItem);
