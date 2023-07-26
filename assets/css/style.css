@@ -1,3 +1,8 @@
+body {
+    background-color: rgb(61, 58, 58);
+    color: white;
+}
+
 .icon {
     max-width: 30%;
 }
@@ -6,7 +11,7 @@
     font-size: 1.4em; 
 }
 
-#selectable .ui-selecting { 
+#selectable .ui-selecting:active { 
     background: #4a4948; 
     color: white; 
 }

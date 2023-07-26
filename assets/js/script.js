@@ -116,8 +116,6 @@ function convertGeocode(city, country) {
     
     fetch(requestUrl, {})
     .then(function(response) {
-        console.log(response.status);
-        console.log(response);
         if (response.status !== 200){
             console.log("Error");
             window.alert("There was an error with the response");
