@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <style>
         #feedback { font-size: 1.4em; }
-        #selectable .ui-selecting { background: #FECA40; }
-        #selectable .ui-selected { background: #F39814; color: white; }
+        #selectable .ui-selecting { background: #4a4948; }
+        #selectable .ui-selected { background: #FECA40; color: white; }
         #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-        #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+        #selectable li { margin: 3px; padding: 0.1em; font-size: 1.4em; text-align: center; }
         </style>
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
@@ -21,26 +21,27 @@
 </head>
 <body>
     <header>
-        <h1 class="header">Weather Application</h1>
+        <h1 class="header">Weather Dashboard</h1>
     </header>
-    <section class="wrapper row my-4">
+    <section class="wrapper row my-4 d-flex">
 
-        <section class="locations col-3" >
-            <section id="city-select">
-                <label for="city-submit" class="form-label">Search for a City</label>
+        <section class="container locations col-3 " >
+            <section class="d-flex flex-column" id="city-select">
+                <label for="city-submit"><h3>Search for a City</h2></label>
                 <input type="text" id="city-submit" placeholder="Austin">
                 <button class="btn searchBtn btn-primary my-3">Search</button>
+                <div class="border mb-3"></div>
             </section>
-            <ol id="selectable">
-
+            <ol class="w-100" id="selectable">
+                
               </ol>
             
         </section>
 
-        <section class="all-weather col-8">
+        <section class="container all-weather col-8">
             
             <section class="todays-weather border border-primary">
-                <h2>Where the weather for today will go</h2>
+                <h3>Where the weather for today will go</h3>
                 <p class="date">Date</p>
                 <p class="temp">Temp</p>
                 <p class="wind">Wind</p>
@@ -48,7 +49,7 @@
             </section>
 
             <section class="weeks-weather mt-3">
-                <h2>5-day Forecast:</h2>
+                <h4>5-day Forecast:</h4>
                 <section class="weather-cards row justify-content-around">
                     <div class="col-2 bg-primary" id="weather-card-1">
                         <p class="date">Date</p>
