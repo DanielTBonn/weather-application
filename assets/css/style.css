@@ -8,6 +8,7 @@
 
 #selectable .ui-selecting { 
     background: #4a4948; 
+    color: white; 
 }
 
 #selectable .ui-selected { 
@@ -26,5 +27,5 @@
     margin: 3px; 
     padding: 0.1em; 
     font-size: 1.4em; 
-    text-align: center; 
+    text-align: center;
 }
