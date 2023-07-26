@@ -2,9 +2,13 @@ var resultData = [];
 var today = dayjs().format('M/D/YYYY');
 var weatherCards = $("[id^=weather-card]");
 
+// This will ensure the page always loads with city data the first time 
 $(function() {
     if (!localStorage.getItem("cities")) {
         convertGeocode("Austin", "");
+    } else {
+        var cities = JSON.parse(localStorage.getItem("cities"));
+        convertGeocode(cities[0], "");
     }
 });
 
