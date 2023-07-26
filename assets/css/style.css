@@ -1,3 +1,7 @@
 .icon {
-    max-width: 25%;
+    max-width: 30%;
+}
+
+#selectable li {
+    font-size: 1em;
 }

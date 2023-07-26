@@ -1,20 +1,20 @@
 var resultData = [];
 var today = dayjs().format('M/D/YYYY');
 var weatherCards = $("[id^=weather-card]");
-console.log(weatherCards);
-console.log(weatherCards.length)
-console.log(today);
+// console.log(weatherCards);
+// console.log(weatherCards.length)
+// console.log(today);
 
 // This function grabs the openweathermap API data and returns info that will be extracted
-function getApi(requestUrl) {
-    console.log(requestUrl);
+function getApi(newUrl) {
+    console.log(newUrl);
+
+    var requestUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + newUrl.lat + "&lon=" + newUrl.lon + "&appid=" + apiKey;
 
     // fetch grabs our api
     fetch (requestUrl , {}) 
     .then(function (response) {
-        console.log(response);
         var newResponse = response.json();
-        console.log(newResponse);
         return newResponse;
     })
     // info is taken from data and fills out the cards of the page
@@ -43,7 +43,7 @@ function getApi(requestUrl) {
             setData(resultData, "#" + weatherCards[i].id)
         }
 
-        return data
+        // return data
         
     });
     
@@ -54,14 +54,14 @@ var requestUrl =
 "https://api.openweathermap.org/data/2.5/forecast?q=London,uk&appid=" + apiKey;
 
 
-var weatherData = getApi(requestUrl);
-console.log(weatherData);
-console.log(resultData);
+// getApi(requestUrl);
+// console.log(weatherData);
+// console.log(resultData);
 
 // Sets the data to the element we are targeting
 function setData(arr, eVal) {
     var currentEl = $(eVal);
-    console.log(currentEl)
+    // console.log(currentEl)
     // Loops through all of the different weather cards children [date/climate, temp, wind, humidity]
     $.each(currentEl.children("p"), function(index) { 
         // adds the date and current weather conditions if it is the first index and the rest of the information in the second
@@ -88,13 +88,31 @@ function converWindMPH(wind) {
     return (wind * 2.237).toFixed(2);
 }
 
+function convertGeocode(city, country) {
+    var requestUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city+ "," + country  + "&limit=5&appid=" + apiKey;
+    console.log(requestUrl);
+    
+    fetch(requestUrl, {})
+    .then(function(response) { 
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data);
+        console.log(data[0]);
+        getApi(data[0]);
+    })
+}
+
+
 $( function() {
     $( "#selectable" ).selectable();
 
 
   } );
   
-  if ($('#selectable').selected()) {
-    console.log("selected");
+$(".btn").on("click", function (event) {
+    $(this).text("hi")
 
-}
+})
+
+convertGeocode("London", "");
