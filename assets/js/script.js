@@ -4,6 +4,11 @@ var weatherCards = $("[id^=weather-card]");
 // console.log(weatherCards);
 // console.log(weatherCards.length)
 // console.log(today);
+$(function() {
+    if (!localStorage.getItem("cities")) {
+        convertGeocode("Austin", "");
+    }
+});
 
 // This function grabs the openweathermap API data and returns info that will be extracted
 function getApi(newUrl) {
@@ -93,8 +98,14 @@ function convertGeocode(city, country) {
     console.log(requestUrl);
     
     fetch(requestUrl, {})
-    .then(function(response) { 
-        return response.json();
+    .then(function(response) {
+        console.log(response.status);
+        console.log(response);
+        if (response.status !== 200){
+            console.log("Nope");
+        } else {
+            return response.json();
+        }
     })
     .then(function(data) {
         console.log(data);
@@ -110,9 +121,16 @@ $( function() {
 
   } );
   
-$(".btn").on("click", function (event) {
-    $(this).text("hi")
-
+$(".searchBtn").on("click", function () {
+    var city = $(this).prev().val();
+    convertGeocode(city, "");
 })
 
-convertGeocode("London", "");
+
+
+var searchLi = $(".ui-widget-content");
+console.log(searchLi)
+searchLi.on("click", function() {
+    console.log($(this.text()));
+})
+
