@@ -115,9 +115,9 @@ function convertGeocode(city, country) {
 }
 
 
-$( function() {
+function initilizeSelectable() {
     $( "#selectable" ).selectable();
-  } );
+  }
   
 $(".searchBtn").on("click", function () {
     var city = $(this).prev().val();
@@ -125,12 +125,20 @@ $(".searchBtn").on("click", function () {
 })
 
 
+var addCityLi = $("#selectable");
+function appendCities(city) {
+    console.log(typeof city);
+    var cityLi = $('<li class="ui-widget-content ui-selectable ui-selectee"></li>').text(city);
+    addCityLi.append(cityLi);
+    initilizeSelectable();
+}
 
 var searchLi = $(".ui-widget-content");
-console.log(searchLi)
 searchLi.selectable({
     selecting: function(event, ui) {
-        console.log($(this).text())
+        var city = $(this).text();
+        convertGeocode(city, "");
     }
 })
-
+initilizeSelectable()
+appendCities("Phoenix");
