@@ -7,11 +7,12 @@ $(function() {
     if (!localStorage.getItem("cities")) {
         convertGeocode("Austin", "");
     } else {
-        var cities = JSON.parse(localStorage.getItem("cities"));
+        var cities = getStorage();
         convertGeocode(cities[0], "");
     }
 });
 
+// Adds newly selected city to local storage
 function addCityLocalStorage(city) {
     var cities = getStorage();
     if (cities.includes(city)) {
@@ -22,6 +23,7 @@ function addCityLocalStorage(city) {
         localStorage.setItem("cities", JSON.stringify(cities));
     }
 }
+
 
 function getStorage(){
     var cities = [];
@@ -59,7 +61,7 @@ function getApi(newUrl) {
         addCityLocalStorage(cityName);
         var currentDate = dayjs(data.list[0].dt_txt).format('M/D/YYYY');
         var weatherIcon = 'https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon +'@2x.png';
-        resultData = [[cityName + " " + currentDate , weatherIcon],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + converWindMPH(data.list[0].wind.speed) + " MPH", "Humidity: " + data.list[0].main.humidity + "%"];
+        resultData = [[cityName + " " + "(" + currentDate + ")"  , weatherIcon],  "Temp: " + convertFarenheit(data.list[0].main.temp) + " \u00B0F", "Wind: " + converWindMPH(data.list[0].wind.speed) + " MPH", "Humidity: " + data.list[0].main.humidity + "%"];
         setData(resultData, ".todays-weather");
 
         // For loop prints weather info to the weatherCards in the 5 day forecast section
