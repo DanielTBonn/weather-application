@@ -1,3 +1,5 @@
+// essential variables created
+var apiKey = "2f8d2f4d2713c98d73c6bee0108a1778";
 var resultData = [];
 var today = dayjs().format('M/D/YYYY');
 var weatherCards = $("[id^=weather-card]");
@@ -16,7 +18,6 @@ $(function() {
 function addCityLocalStorage(city) {
     var cities = getStorage();
     if (cities.includes(city)) {
-        console.log("already there");
         return;
     } else {
         cities.push(city);
@@ -35,6 +36,7 @@ function getStorage(){
     return cities;
 }
 
+// when the page is loaded everything in localStorage.cities is displayed
 function displaySearches() {
     var cities = getStorage();
     for (let i = 0; i < cities.length; i++) {
@@ -44,19 +46,15 @@ function displaySearches() {
 
 // This function grabs the openweathermap API data and returns info that will be extracted
 function getApi(newUrl) {
-    console.log(newUrl);
-
     var requestUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + newUrl.lat + "&lon=" + newUrl.lon + "&appid=" + apiKey;
 
     // fetch grabs our api
     fetch (requestUrl , {}) 
     .then(function (response) {
-        var newResponse = response.json();
-        return newResponse;
+        return response.json();
     })
     // info is taken from data and fills out the cards of the page
     .then(function (data) {
-        console.log(data)
         // Adds weather data for the current day, grabs the current date, and the weather icon associated with the present conditions
         var cityName = data.city.name;
         addCityLocalStorage(cityName);
@@ -80,16 +78,8 @@ function getApi(newUrl) {
             resultData = [[currentDate , weatherIcon], "Temp: " + convertFarenheit(info.main.temp) + " \u00B0F", "Wind: " + converWindMPH(info.wind.speed) + " MPH", "Humidity: " + info.main.humidity + "%"];
             setData(resultData, "#" + weatherCards[i].id)
         }
-
-
-        
     });
-    
 }
-
-var apiKey = "2f8d2f4d2713c98d73c6bee0108a1778";
-var requestUrl = 
-"https://api.openweathermap.org/data/2.5/forecast?q=London,uk&appid=" + apiKey;
 
 // Sets the data to the element we are targeting
 function setData(arr, eVal) {
@@ -110,31 +100,32 @@ function setData(arr, eVal) {
     });
 }
 
+// converts temp to farenheit
 function convertFarenheit(temp) {
     return ((temp - 273.15) * (9/5) + 32).toFixed(2);
 }
 
+// converts windspeed to MPH
 function converWindMPH(wind) {
     return (wind * 2.237).toFixed(2);
 }
 
+// grabs the geocode from the city name (optional functionality for country to be implemented)
 function convertGeocode(city, country) {
     var requestUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "," + country  + "&limit=5&appid=" + apiKey;
-    console.log(requestUrl);
     
     fetch(requestUrl, {})
     .then(function(response) {
         console.log(response.status);
         console.log(response);
         if (response.status !== 200){
-            console.log("Nope");
+            console.log("Error");
+            window.alert("There was an error with the response");
         } else {
             return response.json();
         }
     })
     .then(function(data) {
-        console.log(data);
-        console.log(data[0]);
         getApi(data[0]);
     })
 }
@@ -159,21 +150,15 @@ function setSelectables() {
 $(".searchBtn").on("click", function () {
     var city = $(this).prev().val();
     convertGeocode(city, "");
-
 })
 
 // function that appends new searches to the search list
 function appendCity(city) {
     var addCityLi = $("#selectable");
-    console.log(city);
     var cityLi = $('<li class="ui-widget-content"></li>').text(city);
     addCityLi.append(cityLi);
     setSelectables();
 }
 
+// displays previous searches everytime the page is loaded
 displaySearches();
-
-console.log(localStorage.cities);
-var getAnItem = getStorage();
-var newItem = getAnItem.includes("Houston");
-console.log(newItem);
