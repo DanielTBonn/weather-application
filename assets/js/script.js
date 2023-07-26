@@ -1,14 +1,22 @@
 var resultData = [];
 var today = dayjs().format('M/D/YYYY');
 var weatherCards = $("[id^=weather-card]");
-// console.log(weatherCards);
-// console.log(weatherCards.length)
-// console.log(today);
+
 $(function() {
     if (!localStorage.getItem("cities")) {
         convertGeocode("Austin", "");
     }
 });
+
+function addCityLocalStorage(city) {
+    if (!localStorage.getItem("cities")) {
+        localStorage.setItem("cities", [city]);
+    } else {
+        return;
+    }
+
+
+}
 
 // This function grabs the openweathermap API data and returns info that will be extracted
 function getApi(newUrl) {
@@ -48,7 +56,8 @@ function getApi(newUrl) {
             setData(resultData, "#" + weatherCards[i].id)
         }
 
-        // return data
+        localStorage.setItem("cities", [])
+
         
     });
     
@@ -58,21 +67,13 @@ var apiKey = "2f8d2f4d2713c98d73c6bee0108a1778";
 var requestUrl = 
 "https://api.openweathermap.org/data/2.5/forecast?q=London,uk&appid=" + apiKey;
 
-
-// getApi(requestUrl);
-// console.log(weatherData);
-// console.log(resultData);
-
 // Sets the data to the element we are targeting
 function setData(arr, eVal) {
     var currentEl = $(eVal);
-    // console.log(currentEl)
     // Loops through all of the different weather cards children [date/climate, temp, wind, humidity]
     $.each(currentEl.children("p"), function(index) { 
         // adds the date and current weather conditions if it is the first index and the rest of the information in the second
         if (index === 0) {
-            // console.log($(this))
-            // console.log(arr[1])
             $(this).text(arr[0][0] + " ");
             var addIcon = document.createElement("img");
             addIcon.setAttribute("src", arr[0][1]);
@@ -94,7 +95,7 @@ function converWindMPH(wind) {
 }
 
 function convertGeocode(city, country) {
-    var requestUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city+ "," + country  + "&limit=5&appid=" + apiKey;
+    var requestUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "," + country  + "&limit=5&appid=" + apiKey;
     console.log(requestUrl);
     
     fetch(requestUrl, {})
@@ -114,33 +115,13 @@ function convertGeocode(city, country) {
     })
 }
 
+// initializes any selectables on the page
 $( function() {
     $( "#selectable" ).selectable();
-  } );
+} );
 
-function initilizeSelectable() {
-    $( "#selectable" ).selectable();
-  }
-  
-$(".searchBtn").on("click", function () {
-    var city = $(this).prev().val();
-    convertGeocode(city, "");
-})
-
-
-var addCityLi = $("#selectable");
-function appendCities(city) {
-    console.log(city);
-    var cityLi = $('<li class="ui-widget-content"></li>').text(city);
-    addCityLi.append(cityLi);
-    $( "#selectable" ).selectable();
-    setSelectables();
-    console.log(searchLi);
-}
-
-
+// ensures all items with the ui-widget-content class are selectable
 function setSelectables() {
-    
     var searchLi = $(".ui-widget-content");
     searchLi.selectable({
         selecting: function(event, ui) {
@@ -150,4 +131,17 @@ function setSelectables() {
     })
 }
 
-appendCities("Phoenix");
+// button that searches for the city when clicked
+$(".searchBtn").on("click", function () {
+    var city = $(this).prev().val();
+    convertGeocode(city, "");
+})
+
+// function that appends new searches to the search list
+function appendCities(city) {
+    var addCityLi = $("#selectable");
+    console.log(city);
+    var cityLi = $('<li class="ui-widget-content"></li>').text(city);
+    addCityLi.append(cityLi);
+    setSelectables();
+}
