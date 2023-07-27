@@ -136,8 +136,6 @@ $( function() {
 // ensures all items with the ui-widget-content class are selectable
 function setSelectables() {
     var searchLi = $(".ui-widget-content");
-    console.log("hi");
-    console.log(searchLi)
     searchLi.selectable({
         selecting: function(event, ui) {
             var city = $(this).text();
@@ -148,7 +146,6 @@ function setSelectables() {
 
 // button that searches for the city when clicked
 $(".searchBtn").on("click", function () {
-    console.log($(this));
     var city = $(this).prev().val();
     convertGeocode(city, "");
 })
