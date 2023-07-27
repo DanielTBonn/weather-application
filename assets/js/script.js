@@ -136,6 +136,8 @@ $( function() {
 // ensures all items with the ui-widget-content class are selectable
 function setSelectables() {
     var searchLi = $(".ui-widget-content");
+    console.log("hi");
+    console.log(searchLi)
     searchLi.selectable({
         selecting: function(event, ui) {
             var city = $(this).text();
@@ -153,8 +155,11 @@ $(".searchBtn").on("click", function () {
 // function that appends new searches to the search list
 function appendCity(city) {
     var addCityLi = $("#selectable");
-    var cityLi = $('<li class="ui-widget-content"></li>').text(city);
+    console.log(addCityLi);
+    var cityLi = $('<li class="ui-widget-content ui-selectable ui-selectee"></li>').text(city);
     addCityLi.append(cityLi);
+
+
     setSelectables();
 }
 
