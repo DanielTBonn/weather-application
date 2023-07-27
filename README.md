@@ -8,7 +8,7 @@ if I can spend time outside or not. I learned how to fetch information from APIs
 
 ## Website
 
-![Weather-Application](./Assets/images/weather-application-pic.png)
+![Weather-Application](./assets/images/weather-application-pic.png)
 
 ## Link
 

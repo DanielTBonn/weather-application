@@ -148,6 +148,7 @@ function setSelectables() {
 
 // button that searches for the city when clicked
 $(".searchBtn").on("click", function () {
+    console.log($(this));
     var city = $(this).prev().val();
     convertGeocode(city, "");
 })
@@ -155,11 +156,8 @@ $(".searchBtn").on("click", function () {
 // function that appends new searches to the search list
 function appendCity(city) {
     var addCityLi = $("#selectable");
-    console.log(addCityLi);
-    var cityLi = $('<li class="ui-widget-content ui-selectable ui-selectee"></li>').text(city);
+    var cityLi = $('<li class="ui-widget-content"></li>').text(city);
     addCityLi.append(cityLi);
-
-
     setSelectables();
 }
 
