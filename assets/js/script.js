@@ -142,12 +142,19 @@ function setSelectables() {
             convertGeocode(city, "");
         }
     })
+    searchLi.selectable("refresh")
 }
 
 // button that searches for the city when clicked
 $(".searchBtn").on("click", function () {
     var city = $(this).prev().val();
     convertGeocode(city, "");
+})
+
+$("#locationBtn").on("click", function() {
+    var city = $(this).text();
+    console.log(city);
+    console.log("hi");
 })
 
 // function that appends new searches to the search list
