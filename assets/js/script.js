@@ -128,41 +128,26 @@ function convertGeocode(city, country) {
     })
 }
 
-// initializes any selectables on the page
-$( function() {
-    $( "#selectable" ).selectable();
-} );
-
-// ensures all items with the ui-widget-content class are selectable
-function setSelectables() {
-    var searchLi = $(".ui-widget-content");
-    searchLi.selectable({
-        selecting: function(event, ui) {
-            var city = $(this).text();
-            convertGeocode(city, "");
-        }
-    })
-    searchLi.selectable("refresh")
-}
-
 // button that searches for the city when clicked
 $(".searchBtn").on("click", function () {
     var city = $(this).prev().val();
     convertGeocode(city, "");
 })
 
-$("#locationBtn").on("click", function() {
+// function that retrieves the info from the button and fetches it through the API
+function clickFunction() {
     var city = $(this).text();
-    console.log(city);
-    console.log("hi");
-})
+    convertGeocode(city, "");
+}
 
 // function that appends new searches to the search list
 function appendCity(city) {
-    var addCityLi = $("#selectable");
-    var cityLi = $('<li class="ui-widget-content"></li>').text(city);
-    addCityLi.append(cityLi);
-    setSelectables();
+    var addCityEl = $("#location-selector");
+    var cityLis = $('<li class="list-group-item my-2"></li');
+    var cityBtn = $('<button class="btn btn-secondary w-100 locationBtn" id="locationBtn"></button').text(city);
+    cityLis.append(cityBtn);
+    cityBtn.on("click", clickFunction);
+    addCityEl.append(cityLis);
 }
 
 // displays previous searches everytime the page is loaded
